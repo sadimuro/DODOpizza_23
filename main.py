@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget
 from PyQt5.uic import loadUi
 import sys 
 import sqlite3
+import datetime
 
 connect = sqlite3.connect("admin.db")
 cursor = connect.cursor()
@@ -79,7 +80,23 @@ class MainWindow(QMainWindow):
         get_address = self.address.text()
         get_food = self.food.text()
         print(get_name, get_surname, get_number, get_address, get_food)
-        cursor = connect.execute(f"INSERT INTO order_info VALUES ('{get_name}', '{get_surname}', '{get_number}','{get_address}', '{get_food}');")
+        
+        if [get_name , get_number , get_address ,get_food] == ['','','','']:
+                print("недостоточная информация")
+        else :   
+
+            cursor = connect.cursor()
+            cursor.execute(f"SELECT name FROM orders WHERE name='{get_name}';")
+            res = cursor.fetchall()
+        
+        cursor = connect.execute(f"""INSERT INTO order_info VALUES (
+            '{get_name}', 
+            '{get_surname}', 
+            '{get_number}',
+            '{get_address}', 
+            '{get_food}',
+            '{datetime.datetime.now()}
+            );""")
         connect.commit()
 
 app = QApplication(sys.argv)
