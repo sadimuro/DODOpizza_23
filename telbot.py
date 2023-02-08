@@ -41,29 +41,20 @@ async def on_start(message: types.Message):
         
 @dp.message_handler(text='Заказать')
 async def order_info(message: types.Message):
-    await message.answer("Профессия: бэкенд-разработчик ")
-    await message.answer(
-        text= "Backend — это внутренняя часть сайта и сервера и т.д Стоимость 10000 сом в месяц  Обучение: 5 месяц"
-    )
-    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    keyboard.add(
-        types.KeyboardButton(text='Стоимость'),
-        types.KeyboardButton(text='Обучение')
-    )
+    await message.answer("Перед заказом вы должны заполнить некоторые информации ")
+    
     
     
 @dp.message_handler(text='Меню')
 async def frontend(message: types.Message):
     await message.answer(
-        text= f"""FrontEnd разработчик создает видимую для пользователя часть веб-страницы и его главная задача – точно передать в верстке то, что создал дизайнер,а также реализовать пользовательскую логику. 
-        Стоимость 10000 сом в месяц  
-        Обучение: 5 месяц"""
+        text= "InlineKeyboards bolush kerek"
     )
     
 @dp.message_handler(text='Админ')
 async def uxui(message: types.Message):
     await message.answer(
-        text= "UX/UI-дизайнер ― одна из самых востребованных сегодня профессий на рынке. В этом материале мы подробно разбираем, кто такой UX/UI-дизайнер и почему UX/UI-дизайн ― не только про графику. Стоимость 10000 сом в месяц  Обучение: 5 месяц"
+        text= "baza dannih koro alat turgan keyboard jasash kerek"
     )
     
   
