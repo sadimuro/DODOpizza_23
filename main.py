@@ -22,6 +22,46 @@ class MenuWindow(QWidget):
         super(MenuWindow, self).__init__()
         loadUi('menu.ui', self)
        
+class OrderWindow(QWidget):
+    def __init__(self):
+        super(OrderWindow, self).__init__()
+        loadUi('order.ui', self)       
+
+        self.send.clicked.connect(self.send_order)
+    
+    def show_input_order(self):
+        self.name.show()
+        self.surname.show()
+        self.number.show()
+        self.address.show()
+        self.food.show()
+        self.send.show()
+        
+    def send_order(self):
+        self.show_input_order()
+        get_name = self.name.text()
+        get_surname = self.surname.text()
+        get_number = self.number.text()
+        get_address = self.address.text()
+        get_food = self.food.text()
+        print(get_name, get_surname, get_number, get_address, get_food)
+        
+        # if [get_name , get_number , get_address ,get_food] == ['','','','']:
+        #         print("недостоточная информация")
+        # else :   
+
+        #     cursor = connect.cursor()
+        #     cursor.execute(f"SELECT name FROM orders WHERE name='{get_name}';")
+        #     res = cursor.fetchall()
+        
+        cursor = connect.execute(f"""INSERT INTO order_info VALUES (
+            '{get_name}', 
+            '{get_surname}', 
+            '{get_number}',
+            '{get_address}', 
+            '{get_food}'
+            );""")
+        connect.commit()
 
 class AdminWindow(QWidget):
     def __init__(self):
@@ -44,60 +84,67 @@ class MainWindow(QMainWindow):
         loadUi('main.ui', self)
         self.menu_window = MenuWindow()
         self.admin_window = AdminWindow()
-        self.hide_input_order()
-        self.order.clicked.connect(self.send_order)
-        self.send.clicked.connect(self.send_order)
+        self.order_window = OrderWindow()
+        # self.hide_input_order()
+        # self.order.clicked.connect(self.send_order)
+        # self.send.clicked.connect(self.send_order)
         self.menu.clicked.connect(self.show_menu_window)
         self.admin.clicked.connect(self.show_admin_window)
+        self.order.clicked.connect(self.show_order_window)
 
     def show_menu_window(self):
         self.menu_window.show()
         
+    def show_order_window(self):
+        self.order_window.show()
+        
+        
+        
     def show_admin_window(self):
         self.admin_window.show()
 
-    def hide_input_order(self):
-        self.name.hide()
-        self.surname.hide()
-        self.number.hide()
-        self.address.hide()
-        self.food.hide()
-        self.send.hide()
+    # def hide_input_order(self):
+    #     self.name.hide()
+    #     self.surname.hide()
+    #     self.number.hide()
+    #     self.address.hide()
+    #     self.food.hide()
+    #     self.send.hide()
 
-    def show_input_order(self):
-        self.name.show()
-        self.surname.show()
-        self.number.show()
-        self.address.show()
-        self.food.show()
-        self.send.show()
+    # def show_input_order(self):
+    #     self.name.show()
+    #     self.surname.show()
+    #     self.number.show()
+    #     self.address.show()
+    #     self.food.show()
+    #     self.send.show()
 
-    def send_order(self):
-        self.show_input_order()
-        get_name = self.name.text()
-        get_surname = self.surname.text()
-        get_number = self.number.text()
-        get_address = self.address.text()
-        get_food = self.food.text()
-        print(get_name, get_surname, get_number, get_address, get_food)
+    # def send_order(self):
+    #     self.show_input_order()
+    #     get_name = self.name.text()
+    #     get_surname = self.surname.text()
+    #     get_number = self.number.text()
+    #     get_address = self.address.text()
+    #     get_food = self.food.text()
+    #     print(get_name, get_surname, get_number, get_address, get_food)
         
-        if [get_name , get_number , get_address ,get_food] == ['','','','']:
-                print("недостоточная информация")
-        else :   
+    #     if [get_name , get_number , get_address ,get_food] == ['','','','']:
+    #             print("недостоточная информация")
+    #     else :   
 
-            cursor = connect.cursor()
-            cursor.execute(f"SELECT name FROM orders WHERE name='{get_name}';")
-            res = cursor.fetchall()
+    #         cursor = connect.cursor()
+    #         cursor.execute(f"SELECT name FROM orders WHERE name='{get_name}';")
+    #         res = cursor.fetchall()
         
-        cursor = connect.execute(f"""INSERT INTO order_info VALUES (
-            '{get_name}', 
-            '{get_surname}', 
-            '{get_number}',
-            '{get_address}', 
-            '{get_food}',
-            '{datetime.datetime.now()}
-            );""")
-        connect.commit()
+    #     cursor = connect.execute(f"""INSERT INTO order_info VALUES (
+    #         '{get_name}', 
+    #         '{get_surname}', 
+    #         '{get_number}',
+    #         '{get_address}', 
+    #         '{get_food}',
+    #         '{datetime.datetime.now()}
+    #         );""")
+    #     connect.commit()
 
 app = QApplication(sys.argv)
 window = MainWindow()
